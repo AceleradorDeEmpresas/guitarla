@@ -9,6 +9,7 @@ function App() {
 
   const [data] = useState(db)
   const [cart, setCart] = useState([])
+  
 
   function addToCart(item){
     // Verifica si el item ya está en el carrito
@@ -24,11 +25,16 @@ function App() {
     }
   } 
 
+  function removeFromCart(id) {
+    setCart(prevCart => prevCart.filter(item => item.id !== id) )
+  }
+
 
   return (
     <>
       <Header
         cart={cart}
+        removeFromCart={removeFromCart}
       />
 
 
