@@ -1,18 +1,9 @@
-import { useMemo } from 'react'
-export default function Header({cart, removeFromCart, increaseQuantity, decreaseQuantity, cleanCart}) {
+import { useCart } from "../hooks/useCart"
+
+
+export default function Header({cart, removeFromCart, increaseQuantity, decreaseQuantity, cleanCart, isEmpty, cartTotal}) {
     // El header es un componente que se encarga de mostrar el carrito de compras
 
-    // State derivado 
-    // Que es un state derivado?
-    // Un state derivado es un estado que se calcula a partir de otros estados o props
-    // En este caso, isEmpty es un estado derivado que se calcula a partir del estado cart
-    // Se usa para determinar si el carrito está vacío o no
-    const isEmpty = useMemo(() => cart.length === 0, [cart])
-    // En esa funcion se usa el operador de cortocircuito && para evitar que se ejecute la segunda parte si la primera es falsa
-    // En este caso, si cart.length es 0, no se ejecuta la segunda parte y se devuelve true
-    // Si cart.length es mayor que 0, se ejecuta la segunda parte y se devuelve false
-    // Se usa para determinar si el carrito tiene productos o no
-    const cartTotal = useMemo(() => cart.reduce((total, item) => total + item.price * item.quantity, 0), [cart])
 
     return (
         <header className="py-5 header">
