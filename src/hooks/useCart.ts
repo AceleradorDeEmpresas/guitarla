@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
-import { db } from '../data/Guitar_db.jsx'
+import { db } from '../data/Guitar_db.js'
+import type { Guitar, CartItem } from '../types' 
+
 export const useCart  = () => {
-    const initialCart = () => {
+    const initialCart = () : CartItem[] => {
     // Se obtiene el carrito del localStorage
     const localStorageCart = localStorage.getItem('cart')
     // Si el localStorage no tiene nada, se devuelve un array vacío
@@ -18,7 +20,7 @@ export const useCart  = () => {
         localStorage.setItem('cart', JSON.stringify(cart))
     }, [cart])
 
-    function addToCart(item){
+    function addToCart(item : Guitar){
         // Verifica si el item ya está en el carrito
         const itemExists  = cart.findIndex(guitar => guitar.id === item.id)
         if(itemExists >= 0) { // Este elemento ya existe en el carrito
@@ -27,18 +29,18 @@ export const useCart  = () => {
             updatedCart[itemExists].quantity += 1 // Se incrementa la cantidad
             setCart(updatedCart)
         } else {
-            item.quantity = 1 // Si no existe, se le asigna una cantidad de 1
-            setCart([...cart, item])
+            const newItem = {...item, quantity: 1}
+            setCart([...cart, newItem])
         }
     } 
 
     // Elimina un item del carrito
-    function removeFromCart(id) {
+    function removeFromCart(id : Guitar['id']) {
         setCart(prevCart => prevCart.filter(item => item.id !== id) )
     }
 
     // Aummenta la cantidad de un item en el carrito
-    function increaseQuantity(id) {
+    function increaseQuantity(id : Guitar['id']) {
         const updatedCart = cart.map(item => { 
         if(item.id === id && item.quantity < MAX_ITEM) {
             return {
@@ -52,7 +54,7 @@ export const useCart  = () => {
     }
 
     // Disminuye la cantidad de un item en el carrito
-    function decreaseQuantity(id) {
+    function decreaseQuantity(id : Guitar['id']) {
         const updatedCart = cart.map(item => {
         if(item.id === id && item.quantity > MIN_ITEM) {
             return {

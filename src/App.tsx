@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Header from './components/Header'
 import Guitar from './components/Guitar'
 import { useCart } from './hooks/useCart'
@@ -7,6 +8,9 @@ import './App.css'
 function App() {
 
   const {data, cart, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, cleanCart, isEmpty, cartTotal} = useCart()
+
+  
+  
 
   return (
     <>
